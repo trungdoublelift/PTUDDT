@@ -1,5 +1,5 @@
 {
-  "name": "trungnh",
+  "name": "UyenTNP",
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
@@ -24,6 +24,7 @@
     "react-native-reanimated": "~2.3.1",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
+    "react-native-virtualized-view": "^0.1.5",
     "react-native-web": "0.17.1"
   },
   "devDependencies": {
