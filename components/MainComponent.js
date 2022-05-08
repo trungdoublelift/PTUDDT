@@ -4,12 +4,25 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { View, Text, Linking } from 'react-native';
 import { Icon, Image } from 'react-native-elements';
+import { baseUrl } from '../shared/baseUrl';
+
+// redux
+import { connect } from 'react-redux';
+import { fetchLeaders, fetchDishes, fetchComments, fetchPromos  } from '../redux/ActionCreators';
 
 import Menu from './MenuComponent';
 import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
 import Dishdetail from './DishdetailComponent';
+
+const mapDispatchToProps = dispatch => ({
+  fetchLeaders: () => dispatch(fetchLeaders()),
+  fetchDishes: () => dispatch(fetchDishes()),
+  fetchComments: () => dispatch(fetchComments()),
+  fetchPromos: () => dispatch(fetchPromos())
+});
+
 function HomeNavigatorScreen() {
     const HomeNavigator = createStackNavigator();
     return (
@@ -95,7 +108,7 @@ function CustomDrawerContent(props) {
     <DrawerContentScrollView {...props}>
       <View style={{ backgroundColor: '#7cc', height: 80, alignItems: 'center', flexDirection: 'row' }}>
         <View style={{ flex: 1 }}>
-          <Image source={require('./images/logo.png')} style={{ margin: 10, width: 80, height: 60 }} />
+          <Image source={{ uri: baseUrl + 'images/logo.png' }} style={{ margin: 10, width: 80, height: 60 }} />
         </View>
         <View style={{ flex: 2 }}>
           <Text style={{ color: '#fff', fontSize: 22, fontWeight: 'bold' }}>TDK & Friends</Text>
@@ -121,6 +134,15 @@ function MainNavigatorScreen() {
     );
   }
 class Main extends Component {
+
+  componentDidMount() {
+    // redux
+    this.props.fetchLeaders();
+    this.props.fetchDishes();
+    this.props.fetchComments();
+    this.props.fetchPromos();
+  }
+
     render() {
       return (
         <NavigationContainer>
@@ -129,4 +151,4 @@ class Main extends Component {
       );
     }
 }
-export default Main;
+export default connect(null, mapDispatchToProps)(Main);
