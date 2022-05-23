@@ -88,3 +88,13 @@ const addPromos = (promos) => ({
   type: ActionTypes.ADD_PROMOS,
   payload: promos
 });
+// favorites
+export const postFavorite = (dishId) => (dispatch) => {
+  setTimeout(() => {
+    dispatch(addFavorite(dishId));
+  }, 1000);
+};
+const addFavorite = (dishId) => ({
+  type: ActionTypes.ADD_FAVORITE,
+  payload: dishId
+});
