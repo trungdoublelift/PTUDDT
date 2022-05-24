@@ -15,6 +15,8 @@ import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
 import Dishdetail from './DishdetailComponent';
+import Reservation from './ReservationComponent';
+
 
 const mapDispatchToProps = dispatch => ({
   fetchLeaders: () => dispatch(fetchLeaders()),
@@ -22,6 +24,24 @@ const mapDispatchToProps = dispatch => ({
   fetchComments: () => dispatch(fetchComments()),
   fetchPromos: () => dispatch(fetchPromos())
 });
+
+function ReservationNavigatorScreen() {
+  const ReservationNavigator = createStackNavigator();
+  return (
+    <ReservationNavigator.Navigator initialRouteName='Reservation'
+      screenOptions={{
+        headerStyle: { backgroundColor: '#7cc' },
+        headerTintColor: '#fff',
+        headerTitleStyle: { color: '#fff' }
+      }}>
+      <ReservationNavigator.Screen name='Reservation' component={Reservation}
+        options={({ navigation }) => ({
+          headerTitle: 'Reserve Table',
+          headerLeft: () => (<Icon name='menu' size={36} color='#fff' onPress={() => navigation.toggleDrawer()} />)
+        })} />
+    </ReservationNavigator.Navigator>
+  );
+}
 
 function HomeNavigatorScreen() {
     const HomeNavigator = createStackNavigator();
@@ -130,6 +150,11 @@ function MainNavigatorScreen() {
         <MainNavigator.Screen name='AboutScreen' component={AboutNavigatorScreen} options={{ title: 'About Us', headerShown: false, drawerIcon: ({ focused, size }) => (<Icon name='info' size={size} color={focused ? '#7cc' : '#ccc'} />) }} /> 
         <MainNavigator.Screen name='MenuScreen' component={MenuNavigatorScreen} options={{ title: 'Menu', headerShown: false, drawerIcon: ({ focused, size }) => (<Icon name='menu' size={size} color={focused ? '#7cc' : '#ccc'} />) }} />
         <MainNavigator.Screen name='ContactScreen' component={ContactNavigatorScreen} options={{ title: 'Contact Us', headerShown: false, drawerIcon: ({ focused, size }) => (<Icon name='contacts' size={size} color={focused ? '#7cc' : '#ccc'} />) }} />
+        <MainNavigator.Screen name='ReservationScreen' component={ReservationNavigatorScreen}
+        options={{
+          title: 'Reserve Table', headerShown: false,
+          drawerIcon: ({ focused, size }) => (<Icon name='cutlery' type='font-awesome' size={size} color={focused ? '#7cc' : '#ccc'} />)
+        }} />
       </MainNavigator.Navigator>
     );
   }

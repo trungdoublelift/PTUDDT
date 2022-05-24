@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "UyenTNP",
-    "slug": "UyenTNP",
+    "name": "TrungNH",
+    "slug": "TrungNH",
     "version": "1.0.0",
+    "userInterfaceStyle": "automatic" ,
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
