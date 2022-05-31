@@ -31,7 +31,7 @@ class RenderDish extends Component {
           <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Icon raised reverse name={this.props.favorite ? 'heart' : 'heart-o'} type='font-awesome' color='#f50'
               onPress={() => this.props.favorite ? alert('Already favorite') : this.props.onPressFavorite()} />
-            <Icon raised reverse name='pencil' type='font-awesome' color='#f50'
+            <Icon raised reverse name='pencil' type='font-awesome' color='#512DA8'
               onPress={() => this.props.onPressComment()} />
           </View>
         </Card>
@@ -96,11 +96,10 @@ class Dishdetail extends Component {
               onChangeText={(text) => this.setState({ author: text })} />
             <Input value={this.state.comment} placeholder='Comment' leftIcon={{ name: 'comment-o', type: 'font-awesome' }}
               onChangeText={(text) => this.setState({ comment: text })} />
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-              <Button title='SUBMIT' color='#7cc'
-                onPress={() => { this.submitComment(dishId); this.setState({ showModal: false }); }} />
+            <View style={{ flexDirection: 'column', justifyContent: 'center',width:'100%'}}>
+              <Button title='SUBMIT' color='#512DA8'  onPress={() => { this.submitComment(dishId); this.setState({ showModal: false }); }} />
               <View style={{ width: 10 }} />
-              <Button title='CANCEL' color='#7cc'
+              <Button title='CANCEL' color='#808080'
                 onPress={() => { this.setState({ showModal: false }); }} />
             </View>
           </View>
