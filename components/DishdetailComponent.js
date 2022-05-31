@@ -97,8 +97,8 @@ class Dishdetail extends Component {
             <Input value={this.state.comment} placeholder='Comment' leftIcon={{ name: 'comment-o', type: 'font-awesome' }}
               onChangeText={(text) => this.setState({ comment: text })} />
             <View style={{ flexDirection: 'column', justifyContent: 'center',width:'100%'}}>
-              <Button title='SUBMIT' color='#512DA8'  onPress={() => { this.submitComment(dishId); this.setState({ showModal: false }); }} />
-              <View style={{ width: 10 }} />
+              <Button title='SUBMIT' color='#512DA8'  onPress={() => { this.submitComment(dishId); this.setState({ showModal: false }); }}  />
+              <View style={{height:10 }} />
               <Button title='CANCEL' color='#808080'
                 onPress={() => { this.setState({ showModal: false }); }} />
             </View>
