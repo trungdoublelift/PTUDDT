@@ -5,7 +5,7 @@ import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList, DrawerI
 import { View, Text, Linking } from 'react-native';
 import { Icon, Image } from 'react-native-elements';
 import { baseUrl } from '../shared/baseUrl';
-
+import Favorites from './FavoriteComponent';
 // redux
 import { connect } from 'react-redux';
 import { fetchLeaders, fetchDishes, fetchComments, fetchPromos  } from '../redux/ActionCreators';
@@ -150,12 +150,37 @@ function MainNavigatorScreen() {
         <MainNavigator.Screen name='AboutScreen' component={AboutNavigatorScreen} options={{ title: 'About Us', headerShown: false, drawerIcon: ({ focused, size }) => (<Icon name='info' size={size} color={focused ? '#7cc' : '#ccc'} />) }} /> 
         <MainNavigator.Screen name='MenuScreen' component={MenuNavigatorScreen} options={{ title: 'Menu', headerShown: false, drawerIcon: ({ focused, size }) => (<Icon name='menu' size={size} color={focused ? '#7cc' : '#ccc'} />) }} />
         <MainNavigator.Screen name='ContactScreen' component={ContactNavigatorScreen} options={{ title: 'Contact Us', headerShown: false, drawerIcon: ({ focused, size }) => (<Icon name='contacts' size={size} color={focused ? '#7cc' : '#ccc'} />) }} />
+        
         <MainNavigator.Screen name='ReservationScreen' component={ReservationNavigatorScreen}
         options={{
           title: 'Reserve Table', headerShown: false,
           drawerIcon: ({ focused, size }) => (<Icon name='cutlery' type='font-awesome' size={size} color={focused ? '#7cc' : '#ccc'} />)
         }} />
+        <MainNavigator.Screen name='FavoritesScreen' component={FavoritesNavigatorScreen}
+        options={{
+          title: 'My Favorites', headerShown: false,
+          drawerIcon: ({ focused, size }) => (<Icon name='heart' type='font-awesome' size={size} color={focused ? '#7cc' : '#ccc'} />)
+        }} />
       </MainNavigator.Navigator>
+    );
+  }
+  function FavoritesNavigatorScreen() {
+    const FavoritesNavigator = createStackNavigator();
+    return (
+      <FavoritesNavigator.Navigator initialRouteName='Favorites'
+        screenOptions={{
+          headerStyle: { backgroundColor: '#7cc' },
+          headerTintColor: '#fff',
+          headerTitleStyle: { color: '#fff' }
+        }}>
+        <FavoritesNavigator.Screen name='Favorites' component={Favorites}
+          options={({ navigation }) => ({
+            headerTitle: 'My Favorites',
+            headerLeft: () => (<Icon name='menu' size={36} color='#fff' onPress={() => navigation.toggleDrawer()} />)
+          })} />
+        <FavoritesNavigator.Screen name='Dishdetail' component={Dishdetail}
+          options={{ headerTitle: 'Dish Detail' }} />
+      </FavoritesNavigator.Navigator>
     );
   }
 class Main extends Component {
