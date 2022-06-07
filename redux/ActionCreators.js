@@ -68,11 +68,19 @@ const addComments = (comments) => ({
 
 export const postComment = (dishId, rating, author, comment) => (dispatch) => {
   var newcmt = { dishId: dishId, rating: rating, author: author, comment: comment, date: new Date().toISOString() };
-  setTimeout(() => {
-    dispatch(addComment(newcmt));
-  }, 2000);
+  fetch(baseUrl + 'comments', {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newcmt)
+  })
+    .then(response => {
+      if (!response.ok) throw Error('Error ' + response.status + ': ' + response.statusText);
+      else return response.json();
+    })
+    .then(cmt => dispatch(addComment(cmt)))
+    .catch(error => dispatch(commentsFailed(error.message)));
 };
-const addComment = (newcmt) => ({
+const addComment = (newcmt) => ({ 
   type: ActionTypes.ADD_COMMENT,
   payload: newcmt
 });
