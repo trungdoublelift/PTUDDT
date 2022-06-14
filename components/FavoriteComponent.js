@@ -5,6 +5,9 @@ import Loading from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import { deleteFavorite } from '../redux/ActionCreators';
+import * as Animatable from 'react-native-animatable';
+
+
 // redux
 import { connect } from 'react-redux';
 const mapStateToProps = state => {
@@ -30,12 +33,13 @@ class Favorites extends Component {
                 // <FlatList data={dishes}
                 //   renderItem={({ item, index }) => this.renderMenuItem(item, index)}
                 //   keyExtractor={item => item.id.toString()} />
-                <SwipeListView data={dishes}
+                <Animatable.View animation="fadeInRightBig" duration={2000}>
+                    <SwipeListView data={dishes}
                     renderItem={({ item, index }) => this.renderMenuItem(item, index)}
                     renderHiddenItem={({ item, index }) => this.renderHiddenItem(item, index)}
                     keyExtractor={item => item.id.toString()}
                     rightOpenValue={-100} />
-
+                </Animatable.View>
             );
         }
     }
