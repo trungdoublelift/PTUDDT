@@ -27,6 +27,10 @@ class RenderDish extends Component {
       if (dx < -200) return true; // right to left
       return false;
     };
+    const recognizeComment = ({ dx }) => {
+      if (dx > 200) return true; // Left to right
+      return false;
+    };
     const panResponder = PanResponder.create({
       onStartShouldSetPanResponder: (e, gestureState) => { return true; },
       onPanResponderEnd: (e, gestureState) => {
@@ -39,10 +43,13 @@ class RenderDish extends Component {
               { text: 'OK', onPress: () => { this.props.favorite ? alert('Already favorite') : this.props.onPressFavorite() } },
             ]
           );
+        } else if (recognizeComment(gestureState)) {
+          this.props.onPressComment();
         }
         return true;
       }
     });
+ 
     const dish = this.props.dish;
     if (dish != null) {
       return (
@@ -123,9 +130,9 @@ class Dishdetail extends Component {
               onChangeText={(text) => this.setState({ author: text })} />
             <Input value={this.state.comment} placeholder='Comment' leftIcon={{ name: 'comment-o', type: 'font-awesome' }}
               onChangeText={(text) => this.setState({ comment: text })} />
-            <View style={{ flexDirection: 'column', justifyContent: 'center',width:'100%'}}>
-              <Button title='SUBMIT' color='#512DA8'  onPress={() => { this.submitComment(dishId); this.setState({ showModal: false }); }}  />
-              <View style={{height:10 }} />
+            <View style={{ flexDirection: 'column', justifyContent: 'center', width: '100%' }}>
+              <Button title='SUBMIT' color='#512DA8' onPress={() => { this.submitComment(dishId); this.setState({ showModal: false }); }} />
+              <View style={{ height: 10 }} />
               <Button title='CANCEL' color='#808080'
                 onPress={() => { this.setState({ showModal: false }); }} />
             </View>
