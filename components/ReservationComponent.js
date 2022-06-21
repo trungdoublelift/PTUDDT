@@ -53,19 +53,32 @@ class Reservation extends Component {
   }
 
   handleReservation() {
-    let temp=this.state.date.getHours()+7;
+    let temp = this.state.date.getHours() + 7;
     this.state.date.setHours(temp)
     Alert.alert(
       'Your Reservation OK?',
       'Number of Guestes: ' + this.state.guests + '\nSmoking? ' + this.state.smoking + '\nDate and Time: ' + this.state.date.toISOString(),
       [
         { text: 'Cancel', onPress: () => this.resetForm() },
-        { text: 'OK', onPress: () => this.resetForm() },
+        { text: 'OK', onPress: () => this.presentLocalNotification(this.state.date) },
       ],
       { cancelable: false }
     );
   }
-
+  async presentLocalNotification(date) {
+    Notifications.setNotificationHandler({
+      handleNotification: async () => ({ shouldShowAlert: true, shouldPlaySound: true, shouldSetBadge: true })
+    });
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: 'Your Reservation',
+        body: 'Reservation for ' + date + ' requested',
+        sound: true,
+        vibrate: true
+      },
+      trigger: null
+    });
+  }
   resetForm() {
     this.setState({
       guests: 1,
