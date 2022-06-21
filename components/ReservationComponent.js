@@ -5,7 +5,7 @@ import { Picker } from '@react-native-picker/picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import * as Animatable from 'react-native-animatable';
 import { format } from 'date-fns';
-
+import * as Notifications from 'expo-notifications';
 class Reservation extends Component {
   constructor(props) {
     super(props);
