@@ -9,7 +9,7 @@ import Favorites from './FavoriteComponent';
 // redux
 import { connect } from 'react-redux';
 import { fetchLeaders, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
-
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Menu from './MenuComponent';
 import Home from './HomeComponent';
 import Contact from './ContactComponent';
@@ -17,7 +17,7 @@ import About from './AboutComponent';
 import Dishdetail from './DishdetailComponent';
 import Reservation from './ReservationComponent';
 import Login from './LoginComponent';
-
+import Register from './RegisterComponent';
 
 const mapDispatchToProps = dispatch => ({
   fetchLeaders: () => dispatch(fetchLeaders()),
@@ -52,7 +52,7 @@ function LoginNavigatorScreen() {
         headerTintColor: '#fff',
         headerTitleStyle: { color: '#fff' }
       }}>
-      <LoginNavigator.Screen name='Login' component={Login}
+      <LoginNavigator.Screen name='Login' component={TabNavigatorScreen}
         options={({ navigation }) => ({
           headerTitle: 'Login',
           headerLeft: () => (<Icon name='menu' size={36} color='#fff' onPress={() => navigation.toggleDrawer()} />)
@@ -167,7 +167,7 @@ function MainNavigatorScreen() {
       <MainNavigator.Screen name='AboutScreen' component={AboutNavigatorScreen} options={{ title: 'About Us', headerShown: false, drawerIcon: ({ focused, size }) => (<Icon name='info' size={size} color={focused ? '#7cc' : '#ccc'} />) }} />
       <MainNavigator.Screen name='MenuScreen' component={MenuNavigatorScreen} options={{ title: 'Menu', headerShown: false, drawerIcon: ({ focused, size }) => (<Icon name='menu' size={size} color={focused ? '#7cc' : '#ccc'} />) }} />
       <MainNavigator.Screen name='ContactScreen' component={ContactNavigatorScreen} options={{ title: 'Contact Us', headerShown: false, drawerIcon: ({ focused, size }) => (<Icon name='contacts' size={size} color={focused ? '#7cc' : '#ccc'} />) }} />
-      <MainNavigator.Screen name='LoginScreen' component={LoginNavigatorScreen} options={{title: 'Login', headerShown: false,drawerIcon: ({ focused, size }) => (<Icon name='sign-in' type='font-awesome' size={size} color={focused ? '#7cc' : '#ccc'} />) }} />
+      <MainNavigator.Screen name='LoginScreen' component={LoginNavigatorScreen} options={{ title: 'Login', headerShown: false, drawerIcon: ({ focused, size }) => (<Icon name='sign-in' type='font-awesome' size={size} color={focused ? '#7cc' : '#ccc'} />) }} />
       <MainNavigator.Screen name='ReservationScreen' component={ReservationNavigatorScreen}
         options={{
           title: 'Reserve Table', headerShown: false,
@@ -198,6 +198,23 @@ function FavoritesNavigatorScreen() {
       <FavoritesNavigator.Screen name='Dishdetail' component={Dishdetail}
         options={{ headerTitle: 'Dish Detail' }} />
     </FavoritesNavigator.Navigator>
+  );
+}
+function TabNavigatorScreen() {
+  const TabNavigator = createBottomTabNavigator();
+  return (
+    <TabNavigator.Navigator initialRouteName='Login'>
+      <TabNavigator.Screen name='Login' component={Login}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (<Icon name='sign-in' type='font-awesome' size={size} color={color} />)
+        }} />
+      <TabNavigator.Screen name='Register' component={Register}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (<Icon name='user-plus' type='font-awesome' size={size} color={color} />)
+        }} />
+    </TabNavigator.Navigator>
   );
 }
 class Main extends Component {

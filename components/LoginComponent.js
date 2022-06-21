@@ -9,6 +9,7 @@ class Login extends Component {
     this.state = {
       username: '',
       password: '',
+ 
       remember: false
     }
   }
@@ -25,6 +26,7 @@ class Login extends Component {
           leftIcon={{ name: 'key', type: 'font-awesome' }}
           value={this.state.password}
           onChangeText={(password) => this.setState({ password })} />
+        
         <CheckBox containerStyle={{ backgroundColor: null }}
           title='Remember Me' center
           checked={this.state.remember}
