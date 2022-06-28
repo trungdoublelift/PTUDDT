@@ -1,4 +1,3 @@
-// redux
 import { connect, } from 'react-redux';
 import { postFavorite, postComment } from '../redux/ActionCreators';
 import * as Animatable from 'react-native-animatable';
@@ -6,6 +5,8 @@ import React, { Component } from 'react';
 import { View, ScrollView, Text, FlatList, YellowBox, Modal, Button, PanResponder, Alert } from 'react-native';
 import { Card, Image, Icon, Rating, Input } from 'react-native-elements';
 import { baseUrl } from '../shared/baseUrl';
+import { SliderBox } from 'react-native-image-slider-box';
+
 
 const mapStateToProps = state => {
   return {
@@ -18,6 +19,40 @@ const mapDispatchToProps = dispatch => ({
   postFavorite: (dishId) => dispatch(postFavorite(dishId)),
   postComment: (dishId, rating, author, comment) => dispatch(postComment(dishId, rating, author, comment))
 });
+
+class RenderSlider extends Component {
+   images = [
+
+    baseUrl + 'images/buffet.png',
+    baseUrl + 'images/logo.png'
+  ];
+  render() {
+    return (
+      <Card onLayout={this.onLayout}>
+        <SliderBox images={images} parentWidth={this.state.width - 30} />
+      </Card>
+    )
+  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      width: 30,
+      height: 0
+    };
+  }
+  // render() {
+
+  //   return (
+
+  //   );
+  // }
+  onLayout = (evt) => {
+    this.setState({
+      width: evt.nativeEvent.layout.width,
+      height: evt.nativeEvent.layout.height,
+    });
+  };
+}
 
 
 
@@ -49,14 +84,16 @@ class RenderDish extends Component {
         return true;
       }
     });
- 
+
     const dish = this.props.dish;
     if (dish != null) {
       return (
         <Card {...panResponder.panHandlers}>
-          <Image source={{ uri: baseUrl + dish.image }} style={{ width: '100%', height: 100, flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
+          {/* <Image source={{ uri: baseUrl + dish.image }} style={{ width: '100%', height: 100, flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Card.FeaturedTitle>{dish.name}</Card.FeaturedTitle>
-          </Image>
+          </Image> */}
+          <Card.Title>{dish.name}</Card.Title>
+          <Card.Divider />
           <Text style={{ margin: 10 }}>{dish.description}</Text>
           <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
             <Icon raised reverse name={this.props.favorite ? 'heart' : 'heart-o'} type='font-awesome' color='#f50'
@@ -111,6 +148,9 @@ class Dishdetail extends Component {
     const dishId = parseInt(this.props.route.params.dishId);
     return (
       <ScrollView>
+        <Animatable.View animation="flipInY" duration={2000} delay={1000}>
+          <RenderSlider />
+        </Animatable.View>
         <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
           <RenderDish dish={this.props.dishes.dishes[dishId]}
             favorite={this.props.favorites.some(el => el === dishId)}
