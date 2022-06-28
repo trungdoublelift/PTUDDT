@@ -3,7 +3,7 @@ import { ScrollView, View, Button, Image } from 'react-native';
 import { Input } from 'react-native-elements';
 import * as ImagePicker from 'expo-image-picker';
 import { baseUrl } from '../shared/baseUrl';
-
+import { getDatabase, ref, child, push, set } from 'firebase/database';
 class Register extends Component {
     constructor(props) {
         super(props);
@@ -11,10 +11,20 @@ class Register extends Component {
             imageUrl: baseUrl + 'images/logo.png',
             username: '',
             password: '',
-            firstname: '',
-            lastname: '',
-            email: '',
+
         }
+    }
+    handleRegister() {
+        const dbRef = ref(getDatabase());
+        // push(child(dbRef, 'accounts/'), {
+        //   username: this.state.username,
+        //   password: this.state.password
+        // }); // auto-generated key
+        set(child(dbRef, 'accounts/' + this.state.username), {
+            username: this.state.username,
+            password: this.state.password
+        }); // custom key
+        alert('Ok baby!');
     }
     render() {
         return (
@@ -30,21 +40,7 @@ class Register extends Component {
                         onChangeText={(username) => this.setState({ username })} />
                     <Input placeholder='Password' leftIcon={{ type: 'font-awesome', name: 'key' }} value={this.state.password}
                         onChangeText={(password) => this.setState({ password })} />
-                    <Input
-                        placeholder='First Name'
-                        leftIcon={{ name: 'user-o', type: 'font-awesome' }}
-                        value={this.state.firstname}
-                        onChangeText={(firstname) => this.setState({ firstname })} />
-                    <Input
-                        placeholder='Last Name'
-                        leftIcon={{ name: 'user-o', type: 'font-awesome' }}
-                        value={this.state.lastname}
-                        onChangeText={(lastname) => this.setState({ lastname })} />
-                    <Input
-                        placeholder='Email'
-                        leftIcon={{ name: 'user-o', type: 'font-awesome' }}
-                        value={this.state.email}
-                        onChangeText={(email) => this.setState({ email })} />
+                
                     <View style={{ marginTop: 20 }}>
                         <Button title='Register' color='#7cc' onPress={() => this.handleRegister()} />
                     </View>
@@ -58,8 +54,6 @@ class Register extends Component {
             this.setState({ imageUrl: capturedImage.uri });
         }
     }
-    handleRegister() {
-        alert('Coming soon!');
-    }
+
 }
 export default Register;
