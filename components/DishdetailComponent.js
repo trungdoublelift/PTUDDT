@@ -21,25 +21,27 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class RenderSlider extends Component {
-   images = [
-
-    baseUrl + 'images/buffet.png',
-    baseUrl + 'images/logo.png'
-  ];
-  render() {
-    return (
-      <Card onLayout={this.onLayout}>
-        <SliderBox images={images} parentWidth={this.state.width - 30} />
-      </Card>
-    )
-  }
   constructor(props) {
     super(props);
     this.state = {
       width: 30,
-      height: 0
+      height: 0,
+      images: [
+        baseUrl + this.props.dish.image,
+        baseUrl + 'images/buffet.png',
+        baseUrl + 'images/logo.png'
+      ]
     };
   }
+
+  render() {
+    return (
+      <Card onLayout={this.onLayout}>
+        <SliderBox images={this.state.images} parentWidth={this.state.width - 30} />
+      </Card>
+    )
+  }
+
   // render() {
 
   //   return (
@@ -149,7 +151,7 @@ class Dishdetail extends Component {
     return (
       <ScrollView>
         <Animatable.View animation="flipInY" duration={2000} delay={1000}>
-          <RenderSlider />
+          <RenderSlider dish={this.props.dishes.dishes[dishId]} />
         </Animatable.View>
         <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
           <RenderDish dish={this.props.dishes.dishes[dishId]}
